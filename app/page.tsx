@@ -3,10 +3,14 @@ import Image from "next/image";
 import { CustomFilter, Hero, SearchBar, ShowMore } from "@/components";
 import CarCard from "@/components/CarCard";
 import { fetchCars } from "@/utils";
-import { CarProps, FilterProps } from "@/types";
+import { CarProps, FilterProps, HomePageSearchParams } from "@/types";
 import { fuels, yearsOfProduction } from "@/constants";
 
-export default async function Home({ searchParams }) {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: HomePageSearchParams;
+}) {
   const fetchedCars = await fetchCars({
     manufacturer: searchParams.manufacturer || "",
     year: searchParams.year || 2022,
@@ -36,8 +40,8 @@ export default async function Home({ searchParams }) {
         {!isDataEmpty ? (
           <section>
             <div className="home__cars-wrapper">
-              {fetchedCars?.map((car: CarProps) => (
-                <CarCard car={car} key={car.class} />
+              {fetchedCars?.map((car: CarProps, index: number) => (
+                <CarCard car={car} key={index} />
               ))}
             </div>
             <ShowMore
