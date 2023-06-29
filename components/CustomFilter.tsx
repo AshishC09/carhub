@@ -9,22 +9,17 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { updateSearchParams } from "@/utils";
 
-const CustomFilter = ({ title, options }: CustomFilterProps) => {
+const CustomFilter = ({ title, options, setFilter }: CustomFilterProps) => {
   const [selectedValue, setSelectedValue] = useState(options[0]);
   const router = useRouter();
 
-  const handleSearchParams = (e: { title: string; value: string }) => {
-    const newPathName = updateSearchParams(title, e.value.toLowerCase());
-
-    router.push(newPathName);
-  };
   return (
     <div className="w-fit">
       <Listbox
         value={selectedValue}
         onChange={(e) => {
           setSelectedValue(e);
-          handleSearchParams(e);
+          setFilter(e.value);
         }}
       >
         <div className="relative w-fit z-10">
